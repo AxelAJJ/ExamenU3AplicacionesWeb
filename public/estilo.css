@@ -1,0 +1,27 @@
+body{
+
+    background-color: yellow;
+
+
+}
+
+
+
+    .panel {
+  width: 300px; /* Ancho del panel */
+  padding: 20px; /* Espaciado interno */
+  background-color: #f5f5f5; /* Color de fondo */
+  border: 1px solid #ddd; /* Borde */
+  border-radius: 8px; /* Esquinas redondeadas */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra */
+  font-family: Arial, sans-serif; /* Tipografía */
+}
+.panel h2 {
+  margin-top: 0; /* Elimina el margen superior */
+  color: #333; /* Color del texto del título */
+}
+.panel p {
+  color: #666; /* Color del texto del párrafo */
+}
+
+
