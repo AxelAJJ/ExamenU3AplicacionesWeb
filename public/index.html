@@ -1,62 +1,68 @@
-<!-- public/index.html -->
 <!DOCTYPE html>
 <html lang="es">
-<head> 
-    <center>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PokeAPI con Node.js</title>
     <link rel="stylesheet" href="estilo.css">
     <style>
-        
         body {
             font-family: Arial, sans-serif;
+            background-color: yellow;
+            text-align: center;
+        }
+        .panel {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            margin: 50px auto;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
         }
         .pokemon-info {
             margin-top: 20px;
-            
         }
     </style>
 </head>
 <body>
     <div class="panel">
-    <h1>Buscar Pokémon</h1>
-    <input type="text" id="pokemon-name" placeholder="Escribe el nombre de un Pokémon">
-    <button onclick="searchPokemon()">Buscar</button>
+        <h1>Buscar Pokémon</h1>
+        <input type="text" id="pokemon-name" placeholder="Escribe el nombre de un Pokémon">
+        <button onclick="searchPokemon()">Buscar</button>
+        <div class="pokemon-info" id="pokemon-info">Pokemon no encontrado</div>
+    </div>
 
-    <div class="pokemon-info" id="pokemon-info"></div>
-    
     <script>
         function searchPokemon() {
             const name = document.getElementById('pokemon-name').value.toLowerCase();
             const pokemonInfoDiv = document.getElementById('pokemon-info');
 
             if (name) {
-                fetch(`/pokemon/${name}`)
+                fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
                     .then(response => {
                         if (!response.ok) {
-                            pokemonInfoDiv. innerHTML = 'Pokemon no encontrado';
-                            throw new Error('Pokemon no encontrado');
+                            pokemonInfoDiv.innerHTML = 'Pokémon no encontrado';
+                            throw new Error('Pokémon no encontrado');
                         }
-                        return response. json();
-                        })
-                        .then(data => {
-                            const html = `
-                                <h2>${data.name}</h2>
-                                <img src="${data.sprites.front_default}" alt="${data.name}">
-                                <p><strong>Altura :</strong> ${data.height / 10} m</p>
-                                <p><strong>Peso :</strong> ${data.weight / 10} kg</p>
-                                <p><strong>Habilidades :</strong> ${data.abilities.map(a => a.ability.name).join(', ')}</p>
-                            `;
-                                pokemonInfoDiv.innerHTML = html;
-                            })
-                            .catch(error => {
-                                console.error(error);
-                            });
-                    }
-                }
+                        return response.json();
+                    })
+                    .then(data => {
+                        const html = `
+                            <h2>${data.name.toUpperCase()}</h2>
+                            <img src="${data.sprites.front_default}" alt="${data.name}">
+                            <p><strong>Altura:</strong> ${data.height / 10} m</p>
+                            <p><strong>Peso:</strong> ${data.weight / 10} kg</p>
+                            <p><strong>Habilidades:</strong> ${data.abilities.map(a => a.ability.name).join(', ')}</p>
+                        `;
+                        pokemonInfoDiv.innerHTML = html;
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            } else {
+                pokemonInfoDiv.innerHTML = "Por favor, ingresa un nombre de Pokémon.";
+            }
+        }
     </script>
-    </div>
 </body>
 </html>
-</center>
